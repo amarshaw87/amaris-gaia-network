@@ -1,53 +1,55 @@
 'use client';
 import React from 'react';
+import { TelemetryTrack, Species } from '@/data/telemetryData';
+import { playSpeciesSound } from '@/utils/audioSynth';
 
-export default function SpeciesModal({ selectedCategory, activeReaction, onSelectSpecies, onClose }: any) {
+interface SpeciesModalProps {
+  selectedCategory: TelemetryTrack | null;
+  activeReaction: string | null;
+  onSelectSpecies: (speciesName: string) => void;
+  onClose: () => void;
+}
+
+export default function SpeciesModal({
+  selectedCategory,
+  activeReaction,
+  onSelectSpecies,
+  onClose,
+}: SpeciesModalProps) {
   if (!selectedCategory) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/90 backdrop-blur-lg flex items-center justify-center p-4 z-50">
-      <div className="bg-gray-950 border border-white/20 rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl animate-in fade-in zoom-in duration-200">
-        <div className="flex justify-between items-center border-b border-gray-800 pb-3">
-          <div className="flex items-center space-x-2.5">
-            <span className="text-2xl">{selectedCategory.icon}</span>
-            <h2 className="font-bold text-base text-white">{selectedCategory.title}</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+      <div className={`w-full max-w-lg p-6 rounded-3xl border-2 ${selectedCategory.theme} bg-black/90 shadow-[0_0_50px_rgba(6,182,212,0.25)] relative overflow-hidden flex flex-col max-h-[85vh]`}>
+        
+        {/* Modal Header */}
+        <div className="flex justify-between items-center pb-4 border-b border-white/10">
+          <div className="flex items-center space-x-3">
+            <span className="text-3xl p-2 bg-black/60 rounded-2xl border border-white/10">
+              {selectedCategory.icon}
+            </span>
+            <div>
+              <h2 className="text-lg font-black tracking-wider text-white">
+                {selectedCategory.title}
+              </h2>
+              <p className="text-[11px] text-gray-400 font-mono">
+                TELEMETRY & ACOUSTIC SENSOR FEED
+              </p>
+            </div>
           </div>
-          <button 
+          <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white text-base px-2.5 py-1 rounded-lg bg-white/5 border border-white/10"
+            className="text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-full text-xs font-mono transition-all border border-white/10"
           >
-            ✕
+            ✕ CLOSE
           </button>
         </div>
-        
-        <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
-          {selectedCategory.species.map((item: any, idx: number) => (
-            <div 
-              key={idx} 
-              onClick={() => onSelectSpecies(item.name)}
-              className={`bg-black/60 border p-3.5 rounded-2xl space-y-1.5 cursor-pointer transition-all ${activeReaction === item.name ? 'border-cyan-400 bg-cyan-950/30' : 'border-white/10 hover:border-white/30'}`}
-            >
-              <h4 className="text-xs font-bold text-cyan-300 flex items-center justify-between">
-                <span>🐾 {item.name}</span>
-                <span className="text-[9px] bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded font-mono">Tap & Hear Sound 🔊</span>
-              </h4>
-              <p className="text-[11px] text-gray-300 leading-relaxed">{item.normal}</p>
-              {activeReaction === item.name && (
-                <div className="mt-2 p-2.5 rounded-xl bg-cyan-950/60 border border-cyan-500/40 text-[11px] text-cyan-200 animate-pulse">
-                  ⚡ {item.reaction}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
 
-        <button
-          onClick={onClose}
-          className="w-full py-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl text-xs font-extrabold text-black tracking-wider shadow-lg hover:opacity-90 transition-opacity"
-        >
-          CLOSE & RETURN TO SIMULATOR
-        </button>
-      </div>
-    </div>
-  );
-}
+        {/* Species List Scrollable Feed */}
+        <div className="overflow-y-auto space-y-4 my-4 pr-1 scrollbar-thin scrollbar-thumb-cyan-500/20">
+          {selectedCategory.speciesList.map((species: Species, index: number) => {
+            const isActive = activeReaction === species.name;
+            return (
+              <div
+                key={index}
+                onClick={() => onSelectSpecies(species.
