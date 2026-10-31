@@ -59,5 +59,45 @@ export default function GaiaTelemetry() {
         </div>
 
         {/* Telemetry Tracks Grid */}
-        <section className="space-y-3.5
+        <section className="space-y-3.5 my-2 max-w-md mx-auto w-full">
+          {telemetryData.map((track) => (
+            <div
+              key={track.id}
+              onClick={() => setSelectedCategory(track)}
+              className={`p-4 rounded-2xl border-2 ${track.theme} backdrop-blur-xl cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-95 shadow-2xl`}
+            >
+              <div className="flex items-center space-x-3.5">
+                <span className="text-3xl p-2 bg-black/50 rounded-xl border border-white/10">{track.icon}</span>
+                <div>
+                  <h3 className="font-extrabold text-sm text-white tracking-wide">{track.title}</h3>
+                  <p className="text-[11px] text-gray-300 mt-0.5 leading-relaxed">{track.subtitle}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </section>
 
+        {/* Modular Species Modal Component */}
+        <SpeciesModal 
+          selectedCategory={selectedCategory}
+          activeReaction={activeReaction}
+          onSelectSpecies={handleSpeciesClick}
+          onClose={() => { setSelectedCategory(null); setActiveReaction(null); }}
+        />
+
+        {/* Footer Branding Section */}
+        <footer className="w-full max-w-md mx-auto py-3 px-4 border border-white/10 rounded-2xl bg-white/5 text-[10px] text-gray-400 text-center space-y-2 mt-4">
+          <div className="flex justify-center space-x-4 font-medium">
+            <a href="https://github.com/amarshaw87" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
+            <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+            <a href="#" className="hover:text-white transition-colors">Instagram</a>
+            <a href="#" className="hover:text-white transition-colors">Facebook</a>
+          </div>
+          <div className="text-gray-300 font-semibold">
+            Designed & Engineered by Amar | Powered by AMARIS & Gemini AI Agent Framework.
+          </div>
+        </footer>
+      </div>
+    </main>
+  );
+}
