@@ -1,54 +1,40 @@
-export const playSpeciesSound = (speciesName: string, setAudioStatus: (status: string) => void) => {
+export const playSpeciesSound = (speciesName: string, isMuted: boolean, setAudioStatus: (status: string) => void) => {
+  if (isMuted) {
+    setAudioStatus('Audio Muted 🔇');
+    return;
+  }
+
+  setAudioStatus(`Playing Sound: ${speciesName} 🎵`);
+
   try {
-    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
-    if (!AudioContext) return;
-    const ctx = new AudioContext();
+    const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
 
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    const now = ctx.currentTime;
-
-    if (speciesName.includes('Falcon') || speciesName.includes('Hummingbird') || speciesName.includes('Tern')) {
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(800, now);
-      osc.frequency.exponentialRampToValueAtTime(1400, now + 0.2);
-      gain.gain.setValueAtTime(0.15, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-      osc.start(now);
-      osc.stop(now + 0.3);
-      setAudioStatus('playing: Airborne High-Frequency Pulse 🦅');
-    } else if (speciesName.includes('Butterfly') || speciesName.includes('Locust') || speciesName.includes('Dragonfly')) {
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(400, now);
-      osc.frequency.setValueAtTime(600, now + 0.1);
-      gain.gain.setValueAtTime(0.1, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-      osc.start(now);
-      osc.stop(now + 0.3);
-      setAudioStatus('playing: Insect Swarm Harmonic Pulse 🦋');
-    } else if (speciesName.includes('Whale') || speciesName.includes('Shark') || speciesName.includes('Ray')) {
+    // Unique frequency tones based on species
+    if (speciesName.includes('Tern') || speciesName.includes('Falcon') || speciesName.includes('Goose')) {
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(120, now);
-      osc.frequency.exponentialRampToValueAtTime(80, now + 0.6);
-      gain.gain.setValueAtTime(0.25, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.7);
-      osc.start(now);
-      osc.stop(now + 0.7);
-      setAudioStatus('playing: Deep Oceanic Sonar Frequency 🐋');
+      osc.frequency.setValueAtTime(880, audioCtx.currentTime); // High pitch for birds
+    } else if (speciesName.includes('Butterfly') || speciesName.includes('Dragonfly') || speciesName.includes('Locust')) {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(440, audioCtx.currentTime); // Mid-high flutter
+    } else if (speciesName.includes('Whale') || speciesName.includes('Shark') || speciesName.includes('Turtle')) {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(150, audioCtx.currentTime); // Deep oceanic frequency
     } else {
-      osc.type = 'square';
-      osc.frequency.setValueAtTime(150, now);
-      osc.frequency.linearRampToValueAtTime(220, now + 0.4);
-      gain.gain.setValueAtTime(0.15, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
-      osc.start(now);
-      osc.stop(now + 0.5);
-      setAudioStatus('playing: Terrestrial Resonance Pulse 🐅');
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(300, audioCtx.currentTime); // Terrestrial tone
     }
+
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 1.2);
   } catch (e) {
-    console.log('Audio playback error:', e);
+    console.log('Audio context not supported or blocked', e);
   }
 };
