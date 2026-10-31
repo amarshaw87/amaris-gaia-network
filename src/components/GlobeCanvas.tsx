@@ -1,67 +1,28 @@
 'use client';
-import React, { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sphere } from '@react-three/drei';
-import * as THREE from 'three';
-
-function RotatingEarth() {
-  const earthRef = useRef<THREE.Mesh>(null!);
-  const cloudsRef = useRef<THREE.Mesh>(null!);
-
-  useFrame((state, delta) => {
-    if (earthRef.current) {
-      earthRef.current.rotation.y += delta * 0.05;
-    }
-    if (cloudsRef.current) {
-      cloudsRef.current.rotation.y += delta * 0.07;
-    }
-  });
-
-  return (
-    <group>
-      {/* Earth Core Sphere */}
-      <Sphere ref={earthRef} args={[2, 64, 64]}>
-        <meshStandardMaterial
-          color="#0f172a"
-          emissive="#0284c7"
-          emissiveIntensity={0.2}
-          roughness={0.8}
-          metalness={0.2}
-          wireframe={false}
-        />
-      </Sphere>
-
-      {/* Atmospheric Cloud Layer */}
-      <Sphere ref={cloudsRef} args={[2.05, 32, 32]}>
-        <meshStandardMaterial
-          color="#38bdf8"
-          transparent={true}
-          opacity={0.15}
-          blending={THREE.AdditiveBlending}
-        />
-      </Sphere>
-
-      {/* Orbit Glow Ring */}
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[2.3, 2.35, 64]} />
-        <meshBasicMaterial color="#06b6d4" side={THREE.DoubleSide} transparent opacity={0.4} />
-      </mesh>
-    </group>
-  );
-}
+import React from 'react';
 
 export default function GlobeCanvas() {
   return (
-    <div className="w-full h-72 rounded-3xl overflow-hidden border border-cyan-500/30 bg-gradient-to-b from-black via-blue-950/40 to-black shadow-[0_0_35px_rgba(6,182,212,0.2)] relative">
-      <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-        <ambientLight intensity={1.5} />
-        <pointLight position={[10, 10, 10]} intensity={2} />
-        <RotatingEarth />
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-      </Canvas>
+    <div className="w-full h-72 rounded-3xl overflow-hidden border border-cyan-500/30 bg-gradient-to-b from-black via-blue-950/50 to-black shadow-[0_0_40px_rgba(6,182,212,0.25)] relative flex items-center justify-center">
+      {/* Spinning 3D Globe Visual Simulation */}
+      <div className="relative w-44 h-44 rounded-full border-2 border-cyan-500/40 bg-gradient-to-tr from-blue-900 via-indigo-950 to-cyan-900 shadow-[inset_0_0_30px_rgba(6,182,212,0.5)] animate-spin-slow flex items-center justify-center overflow-hidden">
+        {/* Latitude / Longitude Grid Lines */}
+        <div className="absolute inset-0 border border-cyan-400/20 rounded-full scale-75"></div>
+        <div className="absolute inset-0 border border-cyan-400/20 rounded-full scale-50"></div>
+        <div className="absolute inset-0 border-t border-b border-cyan-400/30 w-full h-1/2 top-1/4"></div>
+        <div className="absolute inset-0 border-l border-r border-cyan-400/30 w-1/2 h-full left-1/4"></div>
+        
+        {/* Glowing Core Pulse */}
+        <div className="w-6 h-6 bg-cyan-400 rounded-full blur-md opacity-80 animate-ping"></div>
+      </div>
+
+      {/* Atmospheric Glow Ring */}
+      <div className="absolute w-52 h-52 rounded-full border border-cyan-400/20 animate-pulse pointer-events-none"></div>
+
+      {/* Live Status Badge */}
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 pointer-events-none text-center">
-        <span className="text-[10px] font-mono tracking-widest text-cyan-300 bg-black/60 px-3 py-1 rounded-full border border-cyan-500/30 backdrop-blur-md">
-          🛰️ REAL-TIME 3D SPINNING EARTH & TELEMETRY ACTIVE
+        <span className="text-[10px] font-mono tracking-widest text-cyan-300 bg-black/70 px-3 py-1 rounded-full border border-cyan-500/30 backdrop-blur-md">
+          🛰️ 3D SPINNING EARTH & MIGRATION RADAR ACTIVE
         </span>
       </div>
     </div>
