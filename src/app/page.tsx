@@ -1,3 +1,4 @@
+
 'use client';
 import React, { useState } from 'react';
 import { telemetryData } from '../data/telemetryData';
@@ -5,6 +6,7 @@ import { playSpeciesSound } from '../utils/audioSynth';
 import SpeciesModal from '../components/SpeciesModal';
 import ParticleBackground from '../components/ParticleBackground';
 import GlobeCanvas from '../components/GlobeCanvas';
+import LiveAnimalMap from '../components/LiveAnimalMap';
 
 export default function GaiaTelemetry() {
   const [selectedCategory, setSelectedCategory] = useState<any | null>(null);
@@ -53,9 +55,10 @@ export default function GaiaTelemetry() {
           </p>
         </header>
 
-        {/* 3D Spinning Earth Globe Component */}
-        <div className="w-full max-w-md mx-auto my-2">
+        {/* 3D Spinning Earth Globe & Live Migration Radar Map */}
+        <div className="w-full max-w-md mx-auto my-2 space-y-3">
           <GlobeCanvas />
+          <LiveAnimalMap />
         </div>
 
         {/* Telemetry Tracks Grid */}
