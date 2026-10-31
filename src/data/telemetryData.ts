@@ -1,98 +1,166 @@
-export const telemetryData = [
+export interface Species {
+  name: string;
+  scientificName: string;
+  route: string;
+  distance: string;
+  velocity: string;
+  coordinates: string;
+  description: string;
+}
+
+export interface TelemetryTrack {
+  id: string;
+  title: string;
+  subtitle: string;
+  icon: string;
+  theme: string;
+  speciesList: Species[];
+}
+
+export const telemetryData: TelemetryTrack[] = [
   {
     id: 'airborne',
     title: 'Airborne Matrix',
-    subtitle: 'Neon-Green trails',
+    subtitle: 'Neon-Green trails (Arctic Tern, Siberian Crane, Peregrine Falcon)',
     icon: '🦅',
-    theme: 'border-emerald-500/50 bg-emerald-950/40 text-emerald-400',
-    species: [
+    theme: 'border-emerald-500/40 bg-emerald-950/20 text-emerald-400',
+    speciesList: [
       {
-        name: 'Peregrine Falcon & Amur Falcon',
-        normal: 'Normal Loop: Aerodynamic jet-like dive position, slicing through wind currents.',
-        reaction: 'Click Reaction: Sudden air-roll, wings stretched wide, unleashing a fierce hunting screech.'
+        name: 'Arctic Tern',
+        scientificName: 'Sterna paradisaea',
+        route: 'Arctic Circle to Antarctica & Back',
+        distance: 'approx. 70,000 km / year',
+        velocity: '40 - 50 km/h cruising speed',
+        coordinates: '71.7069° N, 12.5414° E (Svalbard Sector)',
+        description: 'Experiences two summers each year, undertaking the longest regular migration of any known animal.'
       },
       {
-        name: 'Ruby-throated Hummingbird',
-        normal: 'Normal Loop: High-speed wing motion creating a fixed hovering vector.',
-        reaction: 'Click Reaction: Instant sharp pivot to a new direction with high-frequency buzzing sound.'
+        name: 'Peregrine Falcon',
+        scientificName: 'Falco peregrinus',
+        route: 'Tundra breeding grounds to Southern wintering sites',
+        distance: '3,000 to 10,000 km migration path',
+        velocity: 'Dive velocity exceeding 320 km/h (Aerodynamic Dive)',
+        coordinates: '68.0000° N, 29.0000° E (Sub-Arctic Flightway)',
+        description: 'The fastest member of the animal kingdom, executing high-speed aerial dives to hunt prey.'
       },
       {
-        name: 'Arctic Tern & Siberian Crane',
-        normal: 'Normal Loop: Long-distance migratory glide across global atmospheric layers.',
-        reaction: 'Click Reaction: Synchronized flock formation shift with high-altitude calls.'
+        name: 'Bar-headed Goose',
+        scientificName: 'Anser indicus',
+        route: 'Central Asia over the Himalayas to Indian wetlands',
+        distance: 'approx. 5,000 km cross-continental path',
+        velocity: '60 km/h level flight at extreme altitude',
+        coordinates: '27.9881° N, 86.9250° E (Himalayan Altitude Corridor)',
+        description: 'Flies over the peaks of the Himalayas, tolerating extremely low oxygen levels at high altitudes.'
       }
     ]
   },
   {
     id: 'insect',
-    title: 'Insect Grid',
-    subtitle: 'Neon-Purple trails (Tiny Travelers)',
+    title: 'Insect Grid (Tiny Travelers)',
+    subtitle: 'Neon-Purple trails (Monarch Butterfly, Globe Skimmer, Desert Locust)',
     icon: '🦋',
-    theme: 'border-purple-500/50 bg-purple-950/40 text-purple-400',
-    species: [
+    theme: 'border-purple-500/40 bg-purple-950/20 text-purple-400',
+    speciesList: [
       {
-        name: 'Monarch Butterfly & Painted Lady',
-        normal: 'Normal Loop: Soft, natural flutter with colorful wings riding atmospheric drafts.',
-        reaction: 'Click Reaction: Sharp upward u-turn loop accompanied by soft fluttering/rustling whisper tones.'
-      },
-      {
-        name: 'Desert Locust (Swarm Mode)',
-        normal: 'Normal Loop: Aggressive mass collective march across regional terrain vectors.',
-        reaction: 'Click Reaction: Grid expansion across screen bounds with a massive crunchy swarm audio wave.'
+        name: 'Monarch Butterfly',
+        scientificName: 'Danaus plexippus',
+        route: 'Canada & Northern US to Central Mexican Oyamel Fir Forests',
+        distance: 'approx. 4,000 km multi-generational migration',
+        velocity: '15 - 20 km/h sustained flight',
+        coordinates: '19.5987° N, 100.2736° W (Michoacán Sanctuary)',
+        description: 'Iconic long-distance multi-generational migration navigating complex atmospheric wind currents.'
       },
       {
         name: 'Globe Skimmer Dragonfly',
-        normal: 'Normal Loop: High-precision hovering and erratic tactical interception sweeps.',
-        reaction: 'Click Reaction: Lightning-fast darting motion with crisp wing-snap audio.'
+        scientificName: 'Pantala flavescens',
+        route: 'India across the Indian Ocean to East Africa & back',
+        distance: 'approx. 14,000 to 18,000 km round trip',
+        velocity: '35 - 45 km/h high-wind transit',
+        coordinates: '8.7330° N, 77.7127° E (Southern India Coastal Vector)',
+        description: 'Holds the record for the longest open-ocean migration of any insect, riding monsoon winds.'
+      },
+      {
+        name: 'Desert Locust (Swarm Mode)',
+        scientificName: 'Schistocerca gregaria',
+        route: 'Sahel and East Africa across Arabian Peninsula to South Asia',
+        distance: '2,000 to 4,500 km active swarm movement',
+        velocity: '16 - 20 km/h synchronized swarm drift',
+        coordinates: '23.8859° N, 45.0792° E (Arabian Desert Corridor)',
+        description: 'Forms massive high-density swarms that travel across regions, consuming vegetation.'
       }
     ]
   },
   {
     id: 'oceanic',
-    title: 'Oceanic Grid',
-    subtitle: 'Cyan/Neon-Blue trails (Marine Life)',
+    title: 'Oceanic Grid (Marine Life)',
+    subtitle: 'Cyan/Neon-Blue trails (Blue Whale, Great White Shark, Manta Ray)',
     icon: '🐋',
-    theme: 'border-cyan-500/50 bg-cyan-950/40 text-cyan-400',
-    species: [
+    theme: 'border-cyan-500/40 bg-cyan-950/20 text-cyan-400',
+    speciesList: [
       {
-        name: 'Blue Whale & Humpback Whale',
-        normal: 'Normal Loop: Majestic slow tail sweeps through deep sapphire underwater currents.',
-        reaction: 'Click Reaction: Blowhole mist spray ejection, powerful tail slap, and deep ocean whale song echo.'
+        name: 'Blue Whale',
+        scientificName: 'Balaenoptera musculus',
+        route: 'Antarctic feeding grounds to Tropical breeding waters',
+        distance: 'approx. 8,000 to 10,000 km oceanic transit',
+        velocity: '20 - 25 km/h majestic cruising speed',
+        coordinates: '64.2008° S, 64.0500° W (Antarctic Polar Front)',
+        description: 'The largest animal ever known to have lived, communicating via low-frequency underwater sonar songs.'
       },
       {
-        name: 'Great White & Tiger Shark',
-        normal: 'Normal Loop: Silent, unblinking lateral glide slicing through marine pressure.',
-        reaction: 'Click Reaction: Jaw expansion revealing razor teeth, high-speed surge, and muffled water-gush sound.'
+        name: 'Great White Shark',
+        scientificName: 'Carcharodon carcharias',
+        route: 'California Coast across Pacific Open Ocean to Hawaii (Shark Cafe)',
+        distance: 'approx. 4,000 km trans-oceanic navigation',
+        velocity: '35 - 40 km/h burst hunting velocity',
+        coordinates: '22.3964° N, 160.1956° W (Central Pacific Basin)',
+        description: 'Apex marine predator utilizing geomagnetism and ocean currents for precise deep-water navigation.'
       },
       {
-        name: 'Manta Ray',
-        normal: 'Normal Loop: Graceful underwater flight with broad flat side-fins gliding smoothly.',
-        reaction: 'Click Reaction: Expansive wave-form fin sweep accompanied by a deep-water pulse sound.'
+        name: 'Loggerhead Sea Turtle',
+        scientificName: 'Caretta caretta',
+        route: 'Florida Nesting Beaches across the North Atlantic Gyre to Europe',
+        distance: 'approx. 12,000 km oceanic loop',
+        velocity: '3 - 8 km/h current-assisted drift',
+        coordinates: '32.7765° N, 79.9311° W (Atlantic Gyre Stream)',
+        description: 'Navigates entire ocean basins using Earths magnetic field as a natural compass.'
       }
     ]
   },
   {
     id: 'terrestrial',
-    title: 'Terrestrial Network',
-    subtitle: 'Amber/Neon-Orange vectors (Land Safari)',
+    title: 'Terrestrial Network (Land Safari)',
+    subtitle: 'Amber/Neon-Orange vectors (Wildebeest, Elephant, Gray Wolf)',
     icon: '🐅',
-    theme: 'border-amber-500/50 bg-amber-950/40 text-amber-400',
-    species: [
+    theme: 'border-amber-500/40 bg-amber-950/20 text-amber-400',
+    speciesList: [
       {
-        name: 'African Bush Elephant',
-        normal: 'Normal Loop: Heavy seismic footfalls with rhythmic ear-flapping motions.',
-        reaction: 'Click Reaction: Trunk raised high, tactical step back, and resounding trumpet chinghad sound.'
+        name: 'Blue Wildebeest',
+        scientificName: 'Connochaetes taurinus',
+        route: 'Serengeti Ecosystem (Tanzania) to Masai Mara (Kenya)',
+        distance: 'approx. 800 km annual circular trek',
+        velocity: '40 - 50 km/h herd galloping speed',
+        coordinates: '2.3333° S, 34.8333° E (Serengeti Mara River Crossing)',
+        description: 'Part of the legendary Great Migration involving millions of ungulates crossing crocodile-infested rivers.'
       },
       {
-        name: 'Blue Wildebeest & Plains Zebra',
-        normal: 'Normal Loop: Steady gallop and running animation in continuous migration tracks.',
-        reaction: 'Click Reaction: Hoof ground-strike, alert posture snap, grunting snort or high braying bark.'
+        name: 'African Bush Elephant',
+        scientificName: 'Loxodonta africana',
+        route: 'Zambezi River Basin across Kalahari dry-season corridors',
+        distance: '500 to 1,500 km generational memory tracks',
+        velocity: '10 - 15 km/h steady herd march',
+        coordinates: '18.0137° S, 26.6728° E (Zambezi Waterhole Route)',
+        description: 'Leads family herds across vast terrain using ancestral geographic memory to locate hidden water sources.'
       },
       {
         name: 'Gray Wolf',
-        normal: 'Normal Loop: Low-profile stealth pacing tracking ground scent vectors.',
-        reaction: 'Click Reaction: Freeze stance, head locked upward toward the sky, and chilling pack howl.'
+        scientificName: 'Canis lupus',
+        route: 'Alaska Interior through Canadian Boreal Forest territory',
+        distance: '1,000 to 3,000 km pack hunting range',
+        velocity: '10 - 65 km/h stealth tracking & pursuit',
+        coordinates: '64.2008° N, 149.4937° W (Yukon-Alaska Taiga)',
+        description: 'Resilient pack hunters navigating rugged snowy terrain with chilling vocalizations and sharp territorial instincts.'
       }
     ]
   }
 ];
+
